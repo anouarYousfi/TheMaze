@@ -2,13 +2,14 @@ package com.mazeChallenge.main;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
 
 public class Maze {
 
     private List<Room> existingRooms;
     private List<Path> possiblePaths;
     private Room currentRoom;
+    private Room previousRoom;
     PathBuilder pathBuilder;
 
 
@@ -17,6 +18,7 @@ public class Maze {
         this.possiblePaths = buildPaths(pathNames);
         this.existingRooms = buildRooms(pathNames);
         currentRoom = null;
+        previousRoom = null;
 
 
     }
@@ -25,17 +27,19 @@ public class Maze {
         currentRoom = existingRooms.stream().filter(r -> r.getRoomName().equals(startingRoomName)).findAny().get();
     }
 
-    public void walkTo(String targetRoomName) throws IllegalMoveException {
+    public void walkTo(String targetRoomName) throws IllegalMoveException, ClosedDoorException {
         Room targetRoom = existingRooms.stream().filter(r -> r.getRoomName().equals(targetRoomName)).findAny().orElseThrow(() -> new IllegalMoveException("illegal move , room does not exist"));
-        if (!existingRooms.contains(targetRoom))
+
+        if (!isPathToRoomLegal(targetRoom))
             throw new IllegalMoveException("illegal move !!");
 
-        else if (!isPossiblePath(targetRoom))
-            throw new IllegalMoveException("illegal move !!");
+        else if (isPathToRoomClosed(targetRoom))
+            throw new ClosedDoorException("closed path !!");
 
-        else
+        else {
+            previousRoom = currentRoom;
             currentRoom = targetRoom;
-
+        }
 
     }
 
@@ -64,8 +68,28 @@ public class Maze {
         return rooms;
     }
 
-    private boolean isPossiblePath(Room targetRoom) {
+    private boolean isPathToRoomLegal(Room targetRoom) {
         return possiblePaths.stream().anyMatch(r -> r.areRoomsInPath(currentRoom, targetRoom));
 
     }
+
+    public void closeLastDoor() throws DoorAlreadyClosedException {
+        Path pathToBeClosed = possiblePaths.stream().filter(p -> p.areRoomsInPath(previousRoom, currentRoom)).findAny().orElse(null);
+
+        if (pathToBeClosed.isGateClosed() == true)
+            throw new DoorAlreadyClosedException("this is an already closed door");
+        else
+            pathToBeClosed.closeGate();
+
+
+    }
+
+    private boolean isPathToRoomClosed(Room targetRoom) {
+
+        Path path = possiblePaths.stream().filter(p -> p.areRoomsInPath(currentRoom, targetRoom)).findFirst().orElse(null);
+        return path.isGateClosed();
+
+    }
+
+
 }

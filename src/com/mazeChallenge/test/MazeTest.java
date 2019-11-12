@@ -1,9 +1,8 @@
 package com.mazeChallenge.test;
 
-import com.mazeChallenge.main.IllegalMoveException;
-import com.mazeChallenge.main.Maze;
-import com.mazeChallenge.main.ClosedDoorException;
+import com.mazeChallenge.main.*;
 import org.junit.Test;
+
 
 public class MazeTest {
 
@@ -38,6 +37,103 @@ public class MazeTest {
         mz.walkTo("C"); // Can not reach C from B
     }
 
+    @Test
+    public void allow_Cyclic_Path() throws IllegalMoveException, ClosedDoorException {
+        Maze mz = new Maze("A$B", "A$C", "C|E", "B$D", "B|E", "E$F", "D$F", "F|G");
+        mz.popIn("A");
+        mz.walkTo("B");
+        mz.walkTo("D");
+        mz.walkTo("F");
+        mz.walkTo("E");
+        mz.walkTo("B");
+        mz.walkTo("D");
+        mz.walkTo("F");
+        mz.walkTo("G");
+    }
 
 
+    @Test
+    public void allow_Back_And_Forth() throws IllegalMoveException, ClosedDoorException {
+        Maze mz = new Maze("A$B", "A$C", "C|E", "B$D", "B|E", "E$F", "D$F", "F|G");
+        mz.popIn("A");
+        mz.walkTo("C");
+        mz.walkTo("A");
+        mz.walkTo("B");
+        mz.walkTo("D");
+    }
+
+
+    @Test
+    public void allow_Walker_To_Close_Passed_Door() throws IllegalMoveException, ClosedDoorException, DoorAlreadyClosedException {
+        Maze mz = new Maze("A$B", "A$C", "C|E", "B$D", "B|E", "E$F", "D$F", "F|G");
+        mz.popIn("A");
+        mz.walkTo("B");
+        mz.walkTo("D");
+        mz.walkTo("F");
+        mz.closeLastDoor();
+        mz.walkTo("G");
+    }
+
+    @Test(expected = DoorAlreadyClosedException.class)
+    public void allow_Walker_To_Close_Only_Last_Door() throws IllegalMoveException, ClosedDoorException, DoorAlreadyClosedException {
+        Maze mz = new Maze("A$B", "A$C", "C|E", "B$D", "B|E", "E$F", "D$F", "F|G");
+        mz.popIn("A");
+        mz.walkTo("B");
+        mz.walkTo("D");
+        mz.walkTo("F");
+        mz.closeLastDoor();
+        mz.closeLastDoor();
+        mz.walkTo("G");
+    }
+
+    @Test(expected = ClosedDoorException.class)
+    public void not_Allow_Closed_Door_Crossing() throws IllegalMoveException, ClosedDoorException, DoorAlreadyClosedException {
+        Maze mz = new Maze("A$B", "A$C", "C|E", "B$D", "B|E", "E$F", "D$F", "F|G");
+        mz.popIn("A");
+        mz.walkTo("B");
+        mz.walkTo("D");
+        mz.closeLastDoor();
+        mz.walkTo("F");
+        mz.walkTo("E");
+        mz.walkTo("B");
+        mz.walkTo("D");
+        mz.walkTo("F");
+        mz.walkTo("G");
+    }
+
+    @Test(expected = ClosedDoorException.class)
+    public void not_Allow_Turn_Back_Through_Closed_Door() throws IllegalMoveException, ClosedDoorException, DoorAlreadyClosedException {
+        Maze mz = new Maze("A$B", "A$C", "C|E", "B$D", "B|E", "E$F", "D$F", "F|G");
+        mz.popIn("A");
+        mz.walkTo("B");
+        mz.walkTo("D");
+        mz.closeLastDoor();
+        mz.walkTo("B");
+    }
+
+
+/*    @Test
+    public void follow_Walker() throws IllegalMoveException, ClosedDoorException {
+        Maze mz = new Maze("A$B", "A$C", "B$D", "D$E", "D$F", "F$H", "D$F");
+        mz.popIn("A");
+        mz.walkTo("B");
+        assertThat(mz.readSensors()).isEqualTo("AB");
+        mz.walkTo("D");
+        assertThat(mz.readSensors()).isEqualTo("AB;BD");
+        mz.walkTo("F");
+        assertThat(mz.readSensors()).isEqualTo("AB;BD;DF");
+    }
+
+    @Test
+    public void follow_Walker_Through_Unmonitored_Path() throws IllegalMoveException, ClosedDoorException {
+        Maze mz = new Maze("A$B", "A$C", "C|E", "B$D", "B|E", "E$F", "D$F", "F|G");
+        mz.popIn("A");
+        mz.walkTo("B");
+        assertThat(mz.readSensors()).isEqualTo("AB");
+        mz.walkTo("E");
+        mz.walkTo("F");
+        assertThat(mz.readSensors()).isEqualTo("AB;EF");
+        mz.walkTo("G");
+        assertThat(mz.readSensors()).isEqualTo("AB;EF");
+    }*/
 }

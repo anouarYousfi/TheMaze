@@ -18,6 +18,6 @@ public class Room {
 
     @Override
     public boolean equals(Object obj) {
-        return this.roomName.equals(((Room)obj).roomName);
+        return this.roomName.equals(((Room) obj).roomName);
     }
 }

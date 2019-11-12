@@ -1,4 +1,8 @@
-package com.mazeChallenge.test;
+package com.mazeChallenge.main;
 
-public class DoorAlreadyClosedException {
+public class DoorAlreadyClosedException extends Exception {
+    public DoorAlreadyClosedException(String message){
+        super(message);
+    }
+
 }

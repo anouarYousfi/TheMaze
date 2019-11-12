@@ -6,14 +6,7 @@ import java.util.List;
 
 public class PathBuilder {
 
-    public List<Path> buildPaths(String[] pathNames) {
-        final List<Path> paths = new ArrayList<>();
 
-        for (String p : pathNames)
-            paths.add(buildPath(p));
-
-        return paths;
-    }
 
     public Path buildPath(String pathName) {
         Path path = null;

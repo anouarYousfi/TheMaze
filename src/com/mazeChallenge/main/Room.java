@@ -15,4 +15,9 @@ public class Room {
     public void setRoomName(String roomName) {
         this.roomName = roomName;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.roomName.equals(((Room)obj).roomName);
+    }
 }

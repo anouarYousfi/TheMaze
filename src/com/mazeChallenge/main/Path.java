@@ -39,7 +39,7 @@ public class Path {
 
 
     public boolean areRoomsInPath(Room currentRoom, Room targetRoom) {
-        if (room1.getRoomName().equals(currentRoom.getRoomName()) && room2.getRoomName().equals(targetRoom.getRoomName()) )
+        if (room1.equals(currentRoom) && room2.equals(targetRoom) )
             return true;
         else
             return false;

@@ -7,6 +7,11 @@ import java.util.Set;
 
 public final class MazeResolver {
 
+    public static final int ROOM1_INDEX = 0;
+    public static final int ROOM2_INDEX = 1;
+    public static final String SENSORED_GATE = "$";
+    public static final String UNSENSORED_GATE = "|";
+
     private MazeResolver() {
     }
 
@@ -17,18 +22,15 @@ public final class MazeResolver {
 
         for (String pathComponents : pathsComponents) {
             String[] roomsNames = pathComponents.split("[$|]");
-            Room room1 = new Room(roomsNames[0]);
-            Room room2 = new Room(roomsNames[1]);
+            Room room1 = new Room(roomsNames[ROOM1_INDEX]);
+            Room room2 = new Room(roomsNames[ROOM2_INDEX]);
 
-
-            if (pathComponents.contains("$")) {
+            if (pathComponents.contains(SENSORED_GATE)) {
                 gate = new Gate(GateType.SENSORED);
-            }
-            else if (pathComponents.contains("|")) {
+            } else if (pathComponents.contains(UNSENSORED_GATE)) {
                 gate = new Gate(GateType.UNSENSORED);
             }
 
-            Path.Builder pathBuilder = new Path.Builder();
             Path path = new Path.Builder()
                     .setRoom1(room1)
                     .setRoom2(room2)

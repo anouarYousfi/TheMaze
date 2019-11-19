@@ -2,23 +2,25 @@ package com.mazeChallenge.main;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Maze {
 
-    private List<Room> existingRooms;
-    private List<Path> possiblePaths;
+    private Set<Room> existingRooms;
+    private List<Path> existingPaths;
+    private List<String> detectedPathNames;
     private Room currentRoom;
     private Room previousRoom;
-    PathBuilder pathBuilder;
 
 
     public Maze(String... pathNames) {
-        pathBuilder = new PathBuilder();
-        this.possiblePaths = buildPaths(pathNames);
-        this.existingRooms = buildRooms(pathNames);
-        currentRoom = null;
-        previousRoom = null;
+
+        this.existingPaths = MazeResolver.resolvePaths(pathNames);
+        this.existingRooms = MazeResolver.resolveRooms(pathNames);
+        this.detectedPathNames =new ArrayList<>();
+        this.currentRoom = null;
+        this.previousRoom = null;
 
 
     }
@@ -39,42 +41,31 @@ public class Maze {
         else {
             previousRoom = currentRoom;
             currentRoom = targetRoom;
+            saveTraversedPath();
         }
 
     }
 
-    public List<Path> buildPaths(String[] pathNames) {
-        final List<Path> paths = new ArrayList<>();
+  private void saveTraversedPath() {
+       if (isPathToRoomSensored()) {
+            detectedPathNames.add(previousRoom.getRoomName() + currentRoom.getRoomName());
 
-        for (String p : pathNames)
-            paths.add(pathBuilder.buildPath(p));
+      }
 
-        return paths;
     }
 
-    public List<Room> buildRooms(String[] pathNames) {
-
-        final List<Room> rooms = new ArrayList<>();
-
-        for (String pathName : pathNames) {
-            String[] roomsNames = pathName.split("[$|]");
-            if (!rooms.stream().anyMatch(room -> room.getRoomName().equals(roomsNames[0])))
-                rooms.add(new Room(roomsNames[0]));
-            if (!rooms.stream().anyMatch(room -> room.getRoomName().equals(roomsNames[1])))
-                rooms.add(new Room(roomsNames[1]));
-        }
-
-
-        return rooms;
+   private boolean isPathToRoomSensored() {
+        Path path = existingPaths.stream().filter(p -> p.areRoomsInPath(previousRoom, currentRoom)).findFirst().orElse(null);
+        return path.getGateType().equals(GateType.SENSORED);
     }
 
     private boolean isPathToRoomLegal(Room targetRoom) {
-        return possiblePaths.stream().anyMatch(r -> r.areRoomsInPath(currentRoom, targetRoom));
+        return existingPaths.stream().anyMatch(r -> r.areRoomsInPath(currentRoom, targetRoom));
 
     }
 
     public void closeLastDoor() throws DoorAlreadyClosedException {
-        Path pathToBeClosed = possiblePaths.stream().filter(p -> p.areRoomsInPath(previousRoom, currentRoom)).findAny().orElse(null);
+        Path pathToBeClosed = existingPaths.stream().filter(p -> p.areRoomsInPath(previousRoom, currentRoom)).findAny().orElse(null);
 
         if (pathToBeClosed.isGateClosed() == true)
             throw new DoorAlreadyClosedException("this is an already closed door");
@@ -86,10 +77,14 @@ public class Maze {
 
     private boolean isPathToRoomClosed(Room targetRoom) {
 
-        Path path = possiblePaths.stream().filter(p -> p.areRoomsInPath(currentRoom, targetRoom)).findFirst().orElse(null);
+        Path path = existingPaths.stream().filter(p -> p.areRoomsInPath(currentRoom, targetRoom)).findFirst().orElse(null);
         return path.isGateClosed();
 
     }
 
 
+    public String readSensors() {
+      return   detectedPathNames.stream().collect(Collectors.joining(";"));
+
+    }
 }

@@ -1,14 +1,13 @@
 package com.mazeChallenge.main;
 
 public class Gate {
-    public static final String WITH_SENSOR = "$";
-    public static final String WITHOUT_SENSOR = "|";
-    private String gateType;
+
+    private GateType gateType;
     private boolean isClosed;
 
-
-    public Gate(String gateType) {
-        this.gateType = gateType;
+    public Gate(GateType gateType) {
+        this.isClosed=false;
+        this.gateType=gateType;
     }
 
 
@@ -18,5 +17,9 @@ public class Gate {
 
     public void setClosed(boolean closed) {
         isClosed = closed;
+    }
+
+    public GateType getGateType() {
+        return gateType;
     }
 }

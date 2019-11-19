@@ -1,0 +1,8 @@
+
+Nsquid:S3655"7Call "Optional#isPresent()" before accessing the value.(³Õ¾
+bsquid:S2259P"LA "NullPointerException" could be thrown; "pathToBeClosed" is nullable here.(à•ÈR
+^squid:S2259["BA "NullPointerException" could be thrown; "path" is nullable here.(ášà×üÿÿÿÿ
+wsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ðÆÐûüÿÿÿÿ
+Vsquid:S4034>":Replace this negation and "anyMatch()" with "noneMatch()".(£ðÚ©ûÿÿÿÿ
+Qsquid:S4034@":Replace this negation and "anyMatch()" with "noneMatch()".(¾âÅ
+>squid:S1125P"(Remove the literal "true" boolean value.(à•ÈR

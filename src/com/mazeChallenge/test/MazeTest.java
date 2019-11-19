@@ -3,6 +3,9 @@ package com.mazeChallenge.test;
 import com.mazeChallenge.main.*;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+
 
 public class MazeTest {
 
@@ -112,16 +115,16 @@ public class MazeTest {
     }
 
 
-/*    @Test
+   @Test
     public void follow_Walker() throws IllegalMoveException, ClosedDoorException {
         Maze mz = new Maze("A$B", "A$C", "B$D", "D$E", "D$F", "F$H", "D$F");
         mz.popIn("A");
         mz.walkTo("B");
-        assertThat(mz.readSensors()).isEqualTo("AB");
+       assertEquals(mz.readSensors(),"AB");
         mz.walkTo("D");
-        assertThat(mz.readSensors()).isEqualTo("AB;BD");
+        assertEquals(mz.readSensors(),"AB;BD");
         mz.walkTo("F");
-        assertThat(mz.readSensors()).isEqualTo("AB;BD;DF");
+       assertEquals(mz.readSensors(),"AB;BD;DF");
     }
 
     @Test
@@ -129,11 +132,11 @@ public class MazeTest {
         Maze mz = new Maze("A$B", "A$C", "C|E", "B$D", "B|E", "E$F", "D$F", "F|G");
         mz.popIn("A");
         mz.walkTo("B");
-        assertThat(mz.readSensors()).isEqualTo("AB");
+        assertEquals(mz.readSensors(),"AB");
         mz.walkTo("E");
         mz.walkTo("F");
-        assertThat(mz.readSensors()).isEqualTo("AB;EF");
+        assertEquals(mz.readSensors(),"AB;EF");
         mz.walkTo("G");
-        assertThat(mz.readSensors()).isEqualTo("AB;EF");
-    }*/
+        assertEquals(mz.readSensors(),"AB;EF");
+    }
 }

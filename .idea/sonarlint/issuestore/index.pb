@@ -5,8 +5,6 @@ j
 :src/com/mazeChallenge/main/DoorAlreadyClosedException.java,7\8\78b03e5b043b137a958f4c4fb06a88afc14fba87
 T
 $src/com/mazeChallenge/main/Path.java,f\a\facdedff9952260476063bef45b9aaca7df82856
-[
-+src/com/mazeChallenge/main/PathBuilder.java,a\1\a13e7ec7c555a41e8587246c480898f880ff97ff
 T
 $src/com/mazeChallenge/main/Maze.java,0\7\075c63ed7055387ff3e29b320afbe7ec8bf0964c
 T

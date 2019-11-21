@@ -45,8 +45,8 @@ public final class MazeResolver {
         Set<Room> rooms = new HashSet<>();
         for (String pathComponents : pathsComponents) {
             String[] roomsNames = pathComponents.split("[$|]");
-            rooms.add(new Room(roomsNames[0]));
-            rooms.add(new Room(roomsNames[1]));
+            rooms.add(new Room(roomsNames[ROOM1_INDEX]));
+            rooms.add(new Room(roomsNames[ROOM2_INDEX]));
         }
         return rooms;
     }

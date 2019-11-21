@@ -7,7 +7,4 @@ public enum GateType {
         this.type=type;
 
     }
-    public String getValue(){
-         return type;
-    }
 }

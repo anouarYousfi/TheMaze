@@ -56,7 +56,7 @@ public class Maze {
 
    private boolean isPathToRoomSensored() {
         Path path = existingPaths.stream().filter(p -> p.areRoomsInPath(previousRoom, currentRoom)).findFirst().orElse(null);
-        return path.getGateType().equals(GateType.SENSORED);
+        return GateType.SENSORED.equals(path.getGateType());
     }
 
     private boolean isPathToRoomLegal(Room targetRoom) {

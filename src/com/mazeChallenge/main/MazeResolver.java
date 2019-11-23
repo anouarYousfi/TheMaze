@@ -26,17 +26,22 @@ public final class MazeResolver {
             Room room2 = new Room(roomsNames[ROOM2_INDEX]);
 
             if (pathComponents.contains(SENSORED_GATE)) {
-                gate = new Gate(GateType.SENSORED);
+                Path path = new Path.Builder()
+                        .setRoom1(room1)
+                        .setRoom2(room2)
+                        .setGate(new Gate())
+                        .build();
+                paths.add(path);
             } else if (pathComponents.contains(UNSENSORED_GATE)) {
-                gate = new Gate(GateType.UNSENSORED);
-            }
+                Path path = new Path.Builder()
+                        .setRoom1(room1)
+                        .setRoom2(room2)
+                        .setGate(new Gate())
+                        .withSensor()
+                        .build();
+                paths.add(path);
 
-            Path path = new Path.Builder()
-                    .setRoom1(room1)
-                    .setRoom2(room2)
-                    .setGate(gate)
-                    .build();
-            paths.add(path);
+            }
         }
         return paths;
     }

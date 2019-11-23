@@ -47,6 +47,11 @@ public class Path {
             this.gate = gate;
             return this;
         }
+        public Builder withSensor() {
+            this.gate.setGateType(GateType.SENSORED);
+            return this;
+        }
+
         public Path build(){
 
             return new Path(room1,room2,gate);

@@ -78,7 +78,7 @@ public class Maze {
     private boolean isPathToRoomClosed(Room targetRoom) {
 
         Path path = existingPaths.stream().filter(p -> p.areRoomsInPath(currentRoom, targetRoom)).findFirst().orElse(null);
-        return path.isGateClosed();
+        return path. isGateClosed();
 
     }
 

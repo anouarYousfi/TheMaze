@@ -25,14 +25,14 @@ public final class MazeResolver {
             Room room1 = new Room(roomsNames[ROOM1_INDEX]);
             Room room2 = new Room(roomsNames[ROOM2_INDEX]);
 
-            if (pathComponents.contains(SENSORED_GATE)) {
+            if (pathComponents.contains(UNSENSORED_GATE)) {
                 Path path = new Path.Builder()
                         .setRoom1(room1)
                         .setRoom2(room2)
                         .setGate(new Gate())
                         .build();
                 paths.add(path);
-            } else if (pathComponents.contains(UNSENSORED_GATE)) {
+            } else if (pathComponents.contains(SENSORED_GATE)) {
                 Path path = new Path.Builder()
                         .setRoom1(room1)
                         .setRoom2(room2)

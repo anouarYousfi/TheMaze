@@ -15,3 +15,9 @@ c
 3src/com/mazeChallenge/main/ClosedDoorException.java,a\7\a737c6f6def2035aff32a55d9239455832299b65
 X
 (src/com/mazeChallenge/test/MazeTest.java,b\6\b6a66736f86d600f9b11902c85df3fcb88c0dc08
+X
+(src/com/mazeChallenge/main/GateType.java,c\3\c326c1eedb29a061fcd812209021b86833bbe3dd
+\
+,src/com/mazeChallenge/main/PathsBuilder.java,e\a\eac09154c32441a395d802aeed9ec0333708ecfe
+\
+,src/com/mazeChallenge/main/RoomsBuilder.java,c\e\ce4d49916a93d0f42b623f278241de7785dec689

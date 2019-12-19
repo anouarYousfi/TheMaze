@@ -4,9 +4,9 @@ public class Gate {
     private GateType gateType;
     private boolean isClosed;
 
-    public Gate() {
+    public Gate(GateType gateType) {
         this.isClosed=false;
-        this.gateType=GateType.UNSENSORED;
+        this.gateType=gateType;
     }
 
 

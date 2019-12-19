@@ -2,12 +2,11 @@ package com.mazeChallenge.main;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Maze {
 
-    private Set<Room> existingRooms;
+    private List<Room> existingRooms;
     private List<Path> existingPaths;
     private List<String> detectedPathNames;
     private Room currentRoom;
@@ -15,9 +14,8 @@ public class Maze {
 
 
     public Maze(String... pathNames) {
-
-        this.existingPaths = MazeResolver.resolvePaths(pathNames);
-        this.existingRooms = MazeResolver.resolveRooms(pathNames);
+        existingRooms = new RoomsBuilder().withPaths(pathNames).build();
+        existingPaths = new PathsBuilder().withPaths(pathNames).withRooms(existingRooms).build();
         this.detectedPathNames =new ArrayList<>();
         this.currentRoom = null;
         this.previousRoom = null;
